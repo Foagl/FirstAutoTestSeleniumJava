@@ -23,7 +23,7 @@ public class AutoTest {
     }
     @After
 public void SetClose(){
-        //driver.close();
+        driver.close();
         System.out.println("close");
     }
     @Test
@@ -42,8 +42,7 @@ public void SetClose(){
         driver.findElement(By.id("signup_submit")).click();
         String str = driver.findElement(By.xpath("//*[@id=\"basic-details-section\"]/div[7]/div")).getText();
         // строку получил.
-        String strAnswer = str.replaceAll("[0-9=?]", "");
-        String news = new String(strAnswer);
+        String strAnswer = str.replaceAll("[0-9=? ]", "");
         // создаю новую без цифр из равно вопрос.
         str = str.replaceAll("[^\\d.]", "");
         // удалишнее кроме цифр
@@ -51,17 +50,18 @@ public void SetClose(){
         int i=Integer.parseInt(str);
         int j = i / 10;
         int k = i - (j * 10);
-        if (news.equals("-")) System.out.println(" 51 " + (i - j));
-        if (news.equals("+")) System.out.println(" 52 " + (i + j));
+        if (strAnswer.equals("-")) System.out.println(" 51 " + (i - j));
+        if (strAnswer.equals("+")) System.out.println(" 52 " + (i + j));
         String botStr = String.valueOf(k);
         System.out.println(str);
         System.out.println(j);
         System.out.println(k);
-        System.out.println("news = " + news);
+        System.out.println("Answer = " + strAnswer);
 
         driver.findElement(By.xpath("//*[@id=\"basic-details-section\"]/div[7]/input")).sendKeys(botStr);
-        //driver.findElement(By.id("signup_submit")).click();
+        driver.findElement(By.id("signup_submit")).click();
 
-
+          // Пофиксить нужно: Не убирает из строки strAnswr проблемы, из-за этого не могу пройти проверку на бота.
+         // Нужно написать обход рекламы при регистраци.
     }
 }
